@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# wrapper to call gentyped wiht mtype2 and 
+# wrapper to call genotypes with mtype2 (microTyper) and 
 # calculate other related metrics important for genotyping
-# also genotypes preseance absence markers (e.g. sex markers)
+# also genotypes presence absence markers (e.g. sex markers)
 
 import glob
 import re
@@ -45,7 +45,7 @@ def countAlign(bam):
 		lines = shellOut.stdout.split("\n")
 		for i in lines:
 			if i == "*": # skip unmapped reads
-				next
+				continue
 			sumAlign += 1
 			alignCounts[i] = alignCounts.get(i, 0) + 1
 	return [bam, alignCounts, sumAlign]
