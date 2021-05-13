@@ -105,9 +105,9 @@ as |(number of reads of Allele1 / total number of reads aligning to the locus) -
 This is averaged across all loci with called genotypes (i.e., loci with missing genotypes are skipped) to give something that might be 
 described as the mean deviation of read ratios from their expectation. The higher the value, the more likely there 
 is something wrong with the sample. Samples with low genotyping success (and few reads) will likely also have higher values of 
-this metric, but poor performing samples are typically regenotyped or ommitted from analyses anyway. We have found 
+this metric, but poor performing samples are typically regenotyped or omitted from analyses anyway. We have found 
 that utilizing this metric is best performed by comparing the values across samples sequenced with a given panel. It 
-is frequently informative to view a scatterplot of conatamination score vs number of genotyped loci. Any 
+is frequently informative to view a scatterplot of contamination score vs number of genotyped loci. Any 
 outliers are typically obvious. 
 
 This is _not_ a perfect metric for assessing potential contamination, but it seems to work ok in our limited 
@@ -120,7 +120,10 @@ know - I would be interested in implementing it.
 - alignment_output.txt: whatever output bowtie2 prints to stdErr during alignment
 - microhap_genotypes.txt: genotypes, output by mtype2
 - pres_abs_genotypes.txt: genotypes of presence/absence loci
-- fwd_primer_counts.txt: counts of reads beginning with each forward primer sequence
+- fwd_primer_counts.txt: counts of reads beginning with each forward primer sequence. All loci x individual combinations 
+  should be present, even if the count is 0.
 - summary_stats.txt: For each sample, the proportion of markers genotyped (includes any presence/absence markers), 
   proportion of reads that had valid alignments (number of mapped reads in the bam file / total number of reads), 
   contamination score, number of mapped reads in the bam file, number of reads in the fastq file
+- align_by_ind_locus.txt: number of reads aligning to each locus within each individual. If a locus has 0 reads 
+  aligning within an individual, _it is not listed in the file_.
