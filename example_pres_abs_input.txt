@@ -1,0 +1,2 @@
+Locus	PresGeno	AbsGeno	MinReads	MaxRatioPres	MinRatioAbs
+Sna_sex_sdY	XY	XX	20000	3000	20000
