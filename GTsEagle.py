@@ -98,8 +98,6 @@ def Main():
 			if sep[2] == "": 
 				sep[2] = "000"
 				sep[3] = "000"
-			else:
-				locusSuccess[sep[1]] = locusSuccess.get(sep[1], 0) + 1
 			if re.match("initial", sep[0]):
 				locusTotal[sep[1]] = locusTotal.get(sep[1], 0) + 1
 				if sep[2] != "000":
@@ -114,6 +112,34 @@ def Main():
 			else:
 				otherGenos[sep[0]] = otherGenos.get(sep[0], []) + [sep[1:4]]
 			line = infile.readline()
+			
+	# add presence absence markers, if there are any
+	if len(panelInfo[3]) > 0:
+		with open("pres_abs_genotypes.txt", "r") as infile:
+			line = infile.readline() # skip header
+			line = infile.readline() # Indiv   Locus   Genotype        Ratio   LocusReads      OtherAlignedReads
+			while line:
+				sep = line.split("\t")[0:4]
+				if sep[2] == "": 
+					sep[2] = "000"
+					sep[3] = "000"
+				else:
+					sep[3] = sep[2][1] # splitting genotype into 2 alleles
+					sep[2] = sep[2][0]
+				if re.match("initial", sep[0]):
+					locusTotal[sep[1]] = locusTotal.get(sep[1], 0) + 1
+					if sep[2] != "000":
+						locusSuccess[sep[1]] = locusSuccess.get(sep[1], 0) + 1
+					iGenos[sep[0]] = iGenos.get(sep[0], []) + [sep[1:4]]
+				elif re.match("f[0-9]", sep[0]):
+					fGenos[sep[0]] = fGenos.get(sep[0], []) + [sep[1:4]]
+				elif re.match("qc", sep[0]):
+					qcGenos[sep[0]] = qcGenos.get(sep[0], []) + [sep[1:4]]
+				elif re.match("rr?[0-9]", sep[0]):
+					rrGenos[sep[0]] = rrGenos.get(sep[0], []) + [sep[1:4]]
+				else:
+					otherGenos[sep[0]] = otherGenos.get(sep[0], []) + [sep[1:4]]
+				line = infile.readline()
 	
 	# read in summary stats
 	sumStatDict = {}
