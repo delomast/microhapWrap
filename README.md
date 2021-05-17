@@ -130,7 +130,7 @@ know - I would be interested in implementing it.
 
 
 # GTsEagle.py, mhDfunc.R, mhTripDipWrap.py, and mhTripDip.R
-While microhapWrap.py is written to be (fairly) widely useful, these two other functions 
+While microhapWrap.py is written to be (fairly) widely useful, these other functions 
 are likey only useful to the Eagle Fish Genetics Laboratory and maybe a couple of other 
 laboratories that follow a very similar process. GTsEagle.py executes the genotyping pipeline for 
 microhap panels by calling microhapWrap.py, 
@@ -139,7 +139,8 @@ are useful to the Eagle Fish Genetics Laboratory. mhDfunc.R is a
 wrapper for functions that find duplicate genotypes (through the R package rubias and 
 the tidyverse) and organizes output in a way that is useful to the Eagle Fish 
 Genetics Laboratory. Note that mhDfunc.R requires Rscript to be in the path on your 
-system (or you can call Rscript directly).
+system (or you can call Rscript directly). mhTripDipWrap.py and mhTripDip.R are useful when 
+your samples could be a mixture of diploids and triploids but you don't know the ploidies of individuals.
 
 ## GTsEagle.py
 
