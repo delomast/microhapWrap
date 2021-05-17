@@ -16,6 +16,7 @@ def Main():
 	bc = None # -bc, bcSplitFile.csv
 	minSuccess = 0.9 # -s, minimum proportion of genotypes called to be "successful"
 	prefix = "GTsEagle" # -pre, prefix for output files
+	skipAlign = False # to skip alignments when ploidy already called
 	
 	# wells as numbered in the bcSplit file from 1 - 96
 	wellPosE = ["A01", "B01", "C01", "D01", "E01", "F01", "G01", "H01", "A02", "B02", "C02", "D02", "E02", 
@@ -44,6 +45,8 @@ def Main():
 		elif sys.argv[flag] == "-pre":
 			flag += 1
 			prefix = sys.argv[flag]
+		elif sys.argv[flag] == "--noAlign":
+			skipAlign = True
 		else:
 			print("Error: option", sys.argv[flag], "not recognized.")
 			return
@@ -76,6 +79,8 @@ def Main():
 		"-bt2ref", panelInfo[2]]
 	if len(panelInfo[3]) > 0:
 		shellCommand += ["-pa", panelInfo[3]]
+	if skipAlign:
+		shellCommand += ["-bam"]
 	subprocess.run(shellCommand)
 	
 	# now organize and create lab specific outputs

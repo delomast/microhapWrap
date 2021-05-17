@@ -129,7 +129,7 @@ know - I would be interested in implementing it.
   aligning within an individual, _it is not listed in the file_.
 
 
-# GTsEagle.py and mhDfunc.R
+# GTsEagle.py, mhDfunc.R, mhTripDipWrap.py, and mhTripDip.R
 While microhapWrap.py is written to be (fairly) widely useful, these two other functions 
 are likey only useful to the Eagle Fish Genetics Laboratory and maybe a couple of other 
 laboratories that follow a very similar process. GTsEagle.py executes the genotyping pipeline for 
@@ -150,6 +150,7 @@ Arguments are
 - `-bc` the BCsplit file (default: auto-detected from name starting with bc, BC or barcode and ending in .csv)
 - `-s` minimum proportion for a sample to be successfully genotyped (default: 0.9)
 - `-pre` prefix to use for output file names (default: GTsEagle)
+- `--noAlign` skip performing alignments (bam files should already present)
 
 ```
   GTsEagle.py -panel Sna302 -pre prefixHere
@@ -164,3 +165,21 @@ in both individuals to consider them a duplicate. Third is the prefix to use for
 ```
   mhDfunc.R 0.8 0.95 prefixHere
 ```
+
+## mhTripDipWrap.py
+
+Calls mhTripDip.R to infers diploidy or triploidy and genotypes samples accordingly. One biallelic SNP is 
+selected for each locus within an individual. The diploids/unknown are then processed with GTsEagle.py. The triploids 
+are moved to a subdirectory and processed with microhapWrap.py.
+
+- `-panel` specify the panel to genotype. If not given, valid panel names are printed
+- `-t` the number of threads to use (default: all available to the process)
+- `-bc` the BCsplit file (default: auto-detected from name starting with bc, BC or barcode and ending in .csv)
+- `-s` minimum proportion for a sample to be successfully genotyped (default: 0.9)
+- `-pre` prefix to use for output file names (default: GTsEagle)
+
+In addition to the usual output files, a file with inferred ploidy is also output (prefix_genPloid.txt).
+
+## mhTripDip.R
+
+Called by mhTripDipWrap.py to infer ploidy.
