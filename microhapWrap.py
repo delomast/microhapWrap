@@ -42,7 +42,7 @@ def countAlign(bam):
 	if os.path.exists(bam):
 		shellOut = subprocess.run("samtools view " + bam + " | cut -f 3", 
 			shell = True, stdout = subprocess.PIPE, universal_newlines = True)
-		lines = shellOut.stdout.split("\n")
+		lines = shellOut.stdout.splitlines()
 		for i in lines:
 			if i == "*": # skip unmapped reads
 				continue
