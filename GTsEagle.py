@@ -63,9 +63,14 @@ def Main():
 		"Svi151" : ["/home/efglserv/software/GTseq/microhapInputs/posFiles/Svi151_pos_final.txt", 
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Svi151/wall_1.fasta", 
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Svi151/wall_1", 
-			""] # no pres abs markers for Svi151
+			""], # no pres abs markers for Svi151
+			
+		"Clu341" : ["/home/efglserv/software/GTseq/microhapInputs/posFiles/Clu341_pos_4.txt", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Clu341/wolfAmpRef_5.fa", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Clu341/Clu341", 
+			"/home/efglserv/software/GTseq/microhapInputs/presAbsInputs/Clu341_pres_abs.txt"]
 	}
-		
+	
 	if panel not in panelDict:
 		print("Valid panel names are:")
 		for p in panelDict:
@@ -226,10 +231,10 @@ def Main():
 	for i in range(0, len(allPeds)):
 		ax.scatter(x = gS[allPeds[i]], y = cScore[allPeds[i]], c = colorPalette[i % len(colorPalette)], 
 			label = allPeds[i], alpha = 0.4)
-	ax.legend(framealpha = 0)
+	lg = ax.legend(bbox_to_anchor = (1.05, -0.1), fancybox = True, framealpha = 0.4) # legend outside of plot
 	ax.set_xlabel("Genotype success")
 	ax.set_ylabel("Contamination score")
-	plt.savefig(prefix + "_ContamGraph.pdf", format = "pdf")
+	plt.savefig(prefix + "_ContamGraph.pdf", format = "pdf", bbox_extra_artists = (lg,), bbox_inches = "tight")
 	
 	
 	# read in barcode file
