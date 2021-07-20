@@ -68,7 +68,12 @@ def Main():
 		"Clu341" : ["/home/efglserv/software/GTseq/microhapInputs/posFiles/Clu341_pos_4.txt", 
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Clu341/wolfAmpRef_5.fa", 
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Clu341/Clu341", 
-			"/home/efglserv/software/GTseq/microhapInputs/presAbsInputs/Clu341_pres_abs.txt"]
+			"/home/efglserv/software/GTseq/microhapInputs/presAbsInputs/Clu341_pres_abs.txt"],
+			
+		"One361" : ["/home/efglserv/software/GTseq/microhapInputs/posFiles/One361_pos_5.txt", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/One361/OneAmpRef_5.fa", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/One361/One361", 
+			""], # no pres abs markers for One361
 	}
 	
 	if panel not in panelDict:

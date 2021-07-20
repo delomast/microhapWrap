@@ -87,7 +87,13 @@ def Main():
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Svi151/wall_1.fasta", 
 			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/Svi151/wall_1", 
 			"", # no pres abs markers for Svi151
-			"30", "15", ".05", "-5", "200"] 
+			"30", "15", ".05", "-5", "200"],
+		
+		"One361" : ["/home/efglserv/software/GTseq/microhapInputs/posFiles/One361_pos_5.txt", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/One361/OneAmpRef_5.fa", 
+			"/home/efglserv/software/GTseq/microhapInputs/refSeqs/One361/One361", 
+			"", # no pres abs markers for One361
+			"30", "15", ".05", "-5", "100"]
 	}
 		
 	if panel not in panelDict:
