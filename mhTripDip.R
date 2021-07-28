@@ -33,6 +33,6 @@ ploid$genPloidy[!is.na(ploid$LLR) & ploid$LLR > cmdArgs[5]] <- "3n"
 
 ploid <- ploid %>% mutate(fullName = sample_name, 
 					  sample_name = gsub("^initial|^f[0-9]|^rr?[0-9]|^qc", "", sample_name)) %>%
-	select(fullName, sample_name, genPloidy, everything())
+	select(fullName, sample_name, genPloidy, everything()) %>% rename(`Individual Name` = sample_name)
 
 write.csv(ploid, paste0(prefix, "_genPloidy.txt"), row.names = FALSE, quote = FALSE)
