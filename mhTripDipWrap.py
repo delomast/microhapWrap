@@ -9,6 +9,8 @@ import glob
 import multiprocessing as mp
 import subprocess
 from scipy.stats import binom_test
+import matplotlib.pyplot as plt
+
 
 # calls short read aligner
 #  executed here to allow parallel processing over samples
@@ -184,6 +186,45 @@ def Main():
 		if len(panelInfo[3]) > 0:
 			shellCommand += ["-pa", panelInfo[3]]
 		subprocess.run(shellCommand, cwd = "./tripGenos/")
+		
+		# read in summary stats
+		sumStatDict = {}
+		with open("./tripGenos/summary_stats.txt", "r") as infile:
+			line = infile.readline() # skip header
+			line = infile.readline() # "Indiv" "GenotypeSuccess" "PropAlign" "ContamScore" "CountAlign" "TotalReads"
+			while line:
+				sep = line.rstrip().split("\t")
+				for i in [1,3,4,5]:
+					if sep[i] != "NA":
+						sep[i] = float(sep[i])
+				sumStatDict[sep[0]] = [sep[1], sep[3], sep[4], sep[5]] # gs, contam, align, total
+				line = infile.readline()
+		
+		# make contam graph for triploids
+		cScore = {}
+		gS = {}
+		allPeds = []
+		for ind in sumStatDict:
+			if re.match("rr?[0-9]NTC|initialNTC|f[0-9]NTC|qcNTC", ind):
+				continue
+			temp = sumStatDict[ind]
+			if temp[1] == "NA" or temp[0] == "NA": # geno success should never be "NA", but just in case
+				continue
+			tempPed = re.sub("^initial|^f[0-9]|^rr?[0-9]|^qc|_[0-9]{4}$", "", ind)
+			if tempPed not in allPeds:
+				allPeds += [tempPed]
+			cScore[tempPed] = cScore.get(tempPed, []) + [temp[1]]
+			gS[tempPed] = gS.get(tempPed, []) + [temp[0]]
+		
+		colorPalette = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
+		fig, ax = plt.subplots()
+		for i in range(0, len(allPeds)):
+			ax.scatter(x = gS[allPeds[i]], y = cScore[allPeds[i]], c = colorPalette[i % len(colorPalette)], 
+				label = allPeds[i], alpha = 0.4)
+		lg = ax.legend(bbox_to_anchor = (1.05, -0.1), fancybox = True, framealpha = 0.4) # legend outside of plot
+		ax.set_xlabel("Genotype success")
+		ax.set_ylabel("Contamination score")
+		plt.savefig("./tripGenos/triploid_ContamGraph.pdf", format = "pdf", bbox_extra_artists = (lg,), bbox_inches = "tight")
 
 	# genotype (with full pipeline) diploids/unknown
 	if len(glob.glob("*.bam")) > 0: # NTC may be left over but not in dipUnk
