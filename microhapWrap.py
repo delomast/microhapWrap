@@ -103,7 +103,7 @@ def Main():
 	fastqFiles = [] # -f
 	bamFiles = [] # -bam
 	align = True # whether to align the fastq files or not. Set to false if -b specified
-	threads = len(os.sched_getaffinity(0)) # -t, number of threads to use throughout, default is max available
+	threads = None # -t, number of threads to use throughout, default is max available
 	# inputs for mtype2
 	pos = None # -p
 	ref = None # -r 
@@ -177,6 +177,14 @@ def Main():
 			return
 		flag += 1
 	# end while loop for command line arguments
+	
+	# default thread number
+	if threads is None:
+		try:
+			threads = len(os.sched_getaffinity(0)) # -t, number of threads to use throughout, default is max available
+		except:
+			print("Error: could not detect number of threads available with your OS. Please specify number of threads using the -t argument")
+			return
 	
 	if d is None:
 		d = 5 * ploidy
