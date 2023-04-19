@@ -2,6 +2,10 @@
 A wrapper for using microTyper (https://github.com/delomast/microTyper) and 
 calculating a set of useful summary statistics. 
 
+Citation: Delomas, T.A., et al. 2023. Development of a microhaplotype panel to 
+inform management of gray wolves. Conservation Genetics Resources. 
+https://doi.org/10.1007/s12686-023-01301-x
+
 microhapWrap doesn't do much on its own, it delegates most tasks and 
 then collects and outputs the results. It therefore relies on having 
 several other programs in the system path. It is written 
